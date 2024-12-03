@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<!--
+Program name: patient-form
+Author: Ranadheer Reddy Aienala
+Date created: 11/01/2024
+Date last edited: 12/02/2024
+Version: 4.0
+Description: A medical registration form for patients.-->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Registration Form</title>
+    <link href="style.css" rel="stylesheet">
+    <script src="script.js" defer></script>
+</head>
+
+<body onload="displayDate()">
+
+    <div class="banner">
+        <div id="header">
+            <div><img id="logo" src="adjecta.png" class="center" width="100" height="100" alt="Adjecta Medical"></div>
+            <div>
+                <h3>Adjecta Medical</h3>
+            </div>
+            <div><span id="dynamic-date"></span></div>
+        </div>
+    </div>
+    <div class="main">
+
+        <div class="user-name-box">
+            <p id="welcome-message">Hello jack</p>
+        </div>
+
+        <div class="form-box">
+
+            <form id="registration-form" class="fade-in" onsubmit="return validateForm()" action="thankyou.html">
+                <table style="width:100%">
+                    <!-- Block_1- personal information -->
+                    <tr>
+                        <td><label for="First Name">First name:</label></td>
+                        <td><input type="text" id="first-name" name="first-name" maxlength="30" pattern="[A-Za-z]{1,30}"
+                                required="" minlength="1" maxlength="30" required placeholder="first-name"
+                                oninvalid="this.setCustomValidity('first-name Name not valid.')"
+                                oninput="this.setCustomValidity('')"
+                                title="first-name Name should be 1 to 30 characters only">
+                            <span id="firstNameError" class="error-message"></span>
+                        </td>
+                        <td><label for="middle-initial">Middle Initial:</label></td>
+                        <td><input type="text" id="middle-initial" name="middle-initial" minlength="1" maxlength="1"
+                                placeholder="middle-initial"
+                                oninvalid="this.setCustomValidity('Middle Initial not valid.')"
+                                oninput="this.setCustomValidity('')"
+                                title="Middle Initial should be at least 1 character, only letters allowed, no numbers.">
+                            <span id="middleInitialError" class="error-message"></span>
+                        </td>
+                        <td><label for="last-name">Last Name:</label></td>
+                        <td><input type="text" id="last-name" name="last-name" maxlength="30" pattern="[A-Za-z]{1,30}"
+                                required="" minlength="1" maxlength="30" required placeholder="last-name"
+                                oninvalid="this.setCustomValidity('Last Name not valid.')"
+                                oninput="this.setCustomValidity('')"
+                                title="Last Name should be 1 to 30 characters only">
+                            <span id="lastNameError" class="error-message"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="dob">Date of Birth (DD/MM/YYYY):</label></td>
+                        <td>
+                            <input type="date" id="dob" name="dob" required title="Enter your Date of Birth">
+                            <span id="dob-error" class="error-message"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="ssn">SSN:</label></td>
+                        <td>
+                            <input type="password" id="ssn" name="ssn" maxlength="11" required
+                                pattern="\d{3}-\d{2}-\d{4}" placeholder="XXX-XX-XXXX" oninput="formatSSN(this)"
+                                title="SSN format: XXX-XX-XXXX">
+                            <span id="ssn-error" class="error-message"></span>
+                        </td>
+                    </tr>
+                    <!-- Block-2- contact-->
+                    <tr>
+                        <td><label for="phoneno">Phone Number:</label></td>
+                        <td> <input id="phone" type="tel" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength="13"
+                                placeholder="000-000-0000"
+                                title="Phone number must match the required format i.e 000-000-0000">
+                        </td>
+                        <span id="phone-error" class="error-message"></span>
+
+                    </tr>
+                    <tr>
+                        <td><label for="email">Email Address:</label></td>
+                        <td><input type="email" id="email" name="email" required placeholder="example@example.com"
+                                maxlength="40" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                                title="Enter a valid email address"></td>
+                        <span id="email-error" class="error-message"></span>
+                    </tr>
+
+
+                    <!-- Block_3- Address -->
+                    <tr>
+                        <td><label for="address1">Address Line 1:</label></td>
+                        <td><input type="text" id="address1" name="address1" maxlength="30" required
+                                placeholder="address1" title="Enter your address"></td>
+                        <span id="address1-error" class="error-message"></span>
+                    </tr>
+                    <tr>
+                        <td><label for="address2">Address Line 2(optional):</label></td>
+                        <td><input type="text" id="address2" name="address2" maxlength="30" placeholder="address2"
+                                title="Enter your address"></td>
+                        <span id="address2-error" class="error-message"></span>
+                    </tr>
+                    <tr>
+                        <td><label for="city">City:</label></td>
+                        <td><input type="text" id="city" name="city" minlength="2" maxlength="30" required
+                                placeholder="city" title="Enter your city name"></td>
+                        <span id="city-error" class="error-message"></span>
+                        <td><label for="state">State:</label></td>
+                        <td>
+                            <select name="state" id="state" aria-placeholder="State"><span id="state-error"
+                                    class="error-message"></span>
+                                <option value="" selected="selected">Select a State</option>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">District Of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
+                        </td>
+                        <td> <label for="zip">ZIP Code:</label></td>
+                        <td><input type="text" id="zip" name="zip" required pattern="^\d{5}(-\d{4})?$" maxlength="10"
+                                title="Enter 5-digit or ZIP+4 format (XXXXX or XXXXX-XXXX)" placeholder="XXXXX-XXXX">
+                        </td>
+                        <span id="zip-error" class="error-message"></span>
+                    </tr>
+                    <!--Block_4- Choices and slider -->
+                    <tr>
+                        <td><label>Do you have Medical Insurance?</label></td>
+
+                        <td><input type="radio" id="insurance-yes" name="insurance" value="Yes" required>
+                            <label for="insurance-yes">Yes</label>
+                        </td>
+                        <td><input type="radio" id="insurance-no" name="insurance" value="No">
+                            <label for="insurance-no">No</label>
+                        </td>
+                        <span id="insurance-error" class="error-message"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>Gender:</label></td>
+
+                        <td><input type="radio" id="gender-male" name="gender" value="Male" required>
+                            <label for="gender-male">Male</label>
+                        </td>
+                        <td><input type="radio" id="gender-female" name="gender" value="Female">
+                            <label for="gender-female">Female</label>
+                        </td>
+                        <span id="gender-error" class="error-message"></span>
+                    </tr>
+                    <tr>
+                        <td><label>Have you been vaccinated?</label></td>
+                        <td><input type="radio" id="vaccinated-yes" name="vaccinated" value="yes" required><label
+                                for="vaccinated-yes"></label> Yes</td>
+                        <td><input type="radio" id="vaccinated-no" name="vaccinated" value="no"><label
+                                for="vaccinated-no"></label> No</td>
+                        <span id="vaccinated-error" class="error-message"></span>
+                    </tr>
+                    <tr></tr>
+                        <td colspan="3">
+                            <div style="margin-top: 10px; text-align: center;">
+                                <iframe 
+                                    src="https://www.cdc.gov/vaccines/index.html" 
+                                    width="600" 
+                                    height="300" 
+                                    frameborder="0" 
+                                    title="Vaccination Information"
+                                    style="border: 1px solid #ccc; border-radius: 5px;">
+                                </iframe>
+                                <p style="font-size: 0.85em; margin-top: 5px;">
+                                    Learn more about vaccination schedules and their importance from the CDC.
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="symptoms">Describe your Current Symptoms:</label></td>
+                        <td><textarea id="symptoms" name="symptoms" rows="3" cols="50"
+                                placeholder="like cough,headache,etc"></textarea></td>
+                        <span id="symptoms-error" class="error-message"></span>
+                    </tr>
+                    <tr>
+                        <td><label for="feeling-slider">How are you feeling today? (1-10):</label></td>
+                        <td>
+                            <input type="range" id="feeling-slider" min="1" max="10" value="5"
+                                oninput="updateSliderValue(this.value)">
+                            <span id="slider-value">5</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            <label>Check all conditions that apply:</label><br>
+                        <td><input type="checkbox" id="chickenpox" name="conditions" value="Chickenpox"> Chickenpox<br>
+                        </td>
+                        <td><input type="checkbox" id="measles" name="conditions" value="Measles"> Measles<br></td>
+                        <td><input type="checkbox" id="covid" name="conditions" value="Covid-19"> Covid-19<br></td>
+                        <td><input type="checkbox" id="smallpox" name="conditions" value="Mumps"> Small pox<br></td>
+                        <td><input type="checkbox" id="Tetanus" name="conditions" value="Flu"> Tetanus<br></td>
+                        </td>
+                        <span id="conditions-error" class="error-message"></span>
+                    </tr>
+                    <!--Credentials-->
+                    <tr>
+                        <td><label for="userId">User ID:</label></td>
+                        <td><input type="text" id="user-id" name="user-Id" onblur="validateUserId()"
+                                placeholder="Enter your username" required></td>
+                        <td><span class="error-message" id="user-id-error"></span></td>
+
+
+
+                    </tr>
+                    <tr>
+                        <td><label for="password">Password:</label></td>
+                        <td><input type="password" id="password" name="password" placeholder="Enter your password"
+                                required>
+                        </td>
+                        <td><span class="error-message" id="password-error"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="confirmPassword">Confirm Password:</label></td>
+                        <td><input type="password" id="confirm-password" name="confirm-password"
+                                placeholder="Confirm your password" required></td>
+                        <td><span class="error-message" id="confirm-password-error"></span></td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span style="display: inline-flex;align-items: center;"><input style="width:30px" type="checkbox" checked id="Remember"> Remember me</span>
+                        </td>
+                    </tr>
+                    <!--review and submit-->
+                    <tr>
+                        <td colspan="2">
+                            <button type="button" onclick="reviewForm()">Review</button>
+                            <button type="submit">Submit</button>
+                            <button type="reset">Reset</button>
+                        </td>
+
+                </table>
+            </form>
+        </div>
+
+        <div id="review-section" style="display:none;">
+            <h2>Review Your Information</h2>
+            <table border="1" cellpadding="20" style="width:100%; border:double;">
+                <tr>
+                    <td><strong>First Name:</strong></td>
+                    <td><span id="review-first-name"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Middle Initial:</strong></td>
+                    <td><span id="review-middleiinitial"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Last Name:</strong></td>
+                    <td><span id="review-last-name"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Date of Birth:</strong></td>
+                    <td><span id="review-dob"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>SSN:</strong></td>
+                    <td><span id="review-ssn"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Phone Number:</strong></td>
+                    <td><span id="review-phone"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Email:</strong></td>
+                    <td><span id="review-email"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Address Line 1:</strong></td>
+                    <td><span id="review-address1"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>How are you feeling today? (1-10):</strong></td>
+                    <td><span id="review-feeling"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Medical Insurance:</strong></td>
+                    <td><span id="review-insurance"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Vaccinated:</strong></td>
+                    <td><span id="review-vaccinated"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Gender:</strong></td>
+                    <td><span id="review-gender"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Conditions:</strong></td>
+                    <td><span id="review-conditions"></span></td>
+                </tr>
+
+                <td colspan="2">
+                    <button type="button" onclick="reviewForm()">Review</button>
+                </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer">
+        <img id="logo-footer" src="adjectafooter.png" class="center" width="100" height="100" alt="Adjecta Medical">
+        <p>Adjecta Medical | Hyderabad | Zip Code: 1867</p>
+        <p style="margin-top: 10px;">Helpful Resources:</p>
+        <iframe 
+        src="https://www.cdc.gov/health-topics.html"  
+            width="400" 
+            height="200" 
+            frameborder="0" 
+            title="Healthcare Resources"
+            style="border: 1px solid #ccc; border-radius: 5px;">
+        </iframe>
+        <p style="font-size: 0.8em; margin-top: 5px;">Explore healthcare options and resources.</p>
+        <button onclick="alert('Contact Us: Call 123456789')">Contact Us</button>
+    </div>
+
+
+</body>
+
+</html>

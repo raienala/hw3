@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--
+Program name: patient-form.html
+Author: Ranadheer Reddy Aienala
+Date created: 11/22/2024
+Date last edited: 12/02/2024
+Version: 4.0
+Description: A medical registration form for patients.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <link href="style.css" rel="stylesheet" />
+    <script src="script.js" defer></script>
+    <style>
+        .thankyou-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 50px auto;
+            text-align: center;
+            width: 90%; 
+        }
+
+        
+        .iframe-wrapper {
+            margin: 20px 0;
+            width: 100%;
+            max-width: 700px; 
+        }
+
+        .iframe-wrapper iframe {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body onload="displayDate()">
+    <!-- Header -->
+    <div class="thankyou-banner banner">
+        <img
+            id="logo"
+            src="adjecta.png"
+            class="center"
+            width="100"
+            height="80"
+            alt="Adjecta Medical"
+        />
+        <div><h3>ADJECTA Medical</h3></div>
+        <div><span id="dynamic-date"></span></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="thankyou-box">
+        <h1>Thank You for Your Submission!</h1>
+        <p>Your registration has been successfully completed.</p>
+        <div class="iframe-wrapper">
+            <iframe
+                src="https://www.youtube.com/embed/d3hdMbtuNN0?autoplay=1&mute=1&si=eNY_ZsE-qcYcybf7"
+                height="250"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
+        <div class="iframe-wrapper">
+            <iframe
+                src="iframe_example.html"
+                title="Feedback Form"
+                height="280">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Adjecta Medical | VK18 | 1867</p>
+        <p>For more resources, visit our <a href="index.html">homepage</a>.</p>
+    </div>
+</body>
+</html>
